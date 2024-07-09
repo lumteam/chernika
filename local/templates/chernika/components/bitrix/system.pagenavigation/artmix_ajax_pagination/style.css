@@ -1,0 +1,122 @@
+.ax-pagination {
+    clear: both;
+	padding: 30px 0 40px;
+}
+.ax-pagination *{
+	font: 17px Arial;
+}
+.ax-pagination a{
+	text-decoration: none !important;
+}
+
+.ax-pagination .ax-show-more-pagination {
+    display: block;
+    margin: 0 auto 50px;
+	text-decoration: none;
+}
+
+.ax-pagination .ax-link{
+	color: #202020;
+	text-decoration: none;
+	-webkit-transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	-moz-transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	-ms-transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	-o-transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+}
+.ax-pagination .ax-link:active{
+	text-decoration: none;
+}
+.ax-pagination .ax-link:hover{
+	color: #000;
+}
+.ax-pagination .ax-link.ax-dotted-link{
+	border-bottom: 1px dotted #202020;
+}
+.ax-pagination .ax-link.ax-dotted-link:hover{
+	border-bottom-color: #000;
+}
+.ax-pagination .ax-no-more{
+	color: #000;
+}
+
+.ax-pagination-container {
+	text-align: center;
+	position: relative;
+}
+.ax-pagination-ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	display: inline-block;
+	opacity: .5;
+}
+.ax-pagination-li {
+	display: inline-block;
+	margin: 0 2px 15px 2px;
+}
+.ax-pagination-span {
+    -webkit-transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	-moz-transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	-ms-transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	-o-transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+	padding: 0 8px;
+	display: block;
+	height: 32px;
+	min-width: 32px;
+	line-height: 32px;
+	color: #202020;
+	font-size: 17px;
+	vertical-align: middle;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.ax-pagination-link {
+	text-decoration: none;
+	display: block;
+	height: 32px;
+	min-width: 32px;
+	line-height: 32px;
+	color: #202020;
+	vertical-align: middle;
+}
+.ax-pagination-link:hover .ax-pagination-span{
+	color: #000;
+}
+.ax-pagination-li.ax-active .ax-pagination-span{
+	background: #0083d1;
+	color: #fff;
+}
+.ax-pagination-li.ax-pag-prev{
+	margin-right: 30px;}
+.ax-pagination-li.ax-pag-next{
+	margin-left: 30px;
+}
+.ax-pagination-li.ax-pag-all a .ax-pagination-span,
+.ax-pagination-li.ax-pag-prev a .ax-pagination-span,
+.ax-pagination-li.ax-pag-next a .ax-pagination-span {
+	line-height: 28px;
+	padding: 0 18px;
+	color: #202020;
+}
+.ax-pagination-li.ax-pag-all .ax-pagination-span,
+.ax-pagination-li.ax-pag-prev .ax-pagination-span,
+.ax-pagination-li.ax-pag-next .ax-pagination-span {
+	color: #bebebe;
+	line-height: 28px;
+	padding: 0 18px;
+}
+.ax-pagination-li.ax-pag-all a:hover .ax-pagination-span,
+.ax-pagination-li.ax-pag-prev a:hover .ax-pagination-span,
+.ax-pagination-li.ax-pag-next a:hover .ax-pagination-span {
+	background: #fff;
+	color: #000;
+}
+
+/*color schemes*/
+.ax-pagination-li.ax-active .ax-pagination-span {
+	background: #e3e3e3;
+	color: #000;
+}

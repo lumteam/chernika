@@ -1,0 +1,18 @@
+.bx_filter_param_label.disabled{
+    opacity:.2;cursor:default; display: none;
+}
+
+.toggle-button{
+    margin: 10px 0 0;
+    text-align: right;
+    cursor: pointer;
+}
+
+.aside-filter-item.key-145 ul.long{
+    overflow-y: hidden;
+}
+
+.aside-filter-item.key-145 ul.long.expand
+{
+    height: auto;
+}

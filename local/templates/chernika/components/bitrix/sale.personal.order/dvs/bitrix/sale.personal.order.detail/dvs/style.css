@@ -1,0 +1,46 @@
+.order-status{
+position: relative;
+display: inline-block;
+overflow: visible;
+align-content: center;
+width: 12px;
+height: 12px;
+border-radius: 50%;
+box-sizing: content-box;
+border: solid 1px #fbaf5d;
+background-color: #fbaf5d;
+}
+.order-charac-item{line-height:2rem}
+.order-charac-item:first-child{padding-top:0}
+.order-charac-item:last-child{padding-bottom:0}
+.order-charac-item_attr{width:150px;display:inline-block;color:#7f7f7f;-ms-flex-negative:0;flex-shrink:0}
+.order-charac-item_value{-webkit-hyphens:auto;-ms-hyphens:auto;hyphens:auto}
+.cart-item-img{width:180px!important;}
+.text-orange{color:#fbaf5d}
+.text-red{color:#f26d7d}
+.text-green{color:#82ca9c}
+.history-table .order-status{width:8px;height:8px;margin-right:5px}
+
+.btn-inverse{background-color:rgba(0,0,0,.3)!important;}
+.btn-inverse-width{padding-left:20px;padding-right:20px;display:inline-block!important;;width:auto!important}
+
+.fl-box,.flb{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap}
+.fl-box_nw,.flb_nw{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:nowrap;-ms-flex-wrap:nowrap;flex-wrap:nowrap}
+.justify-content-center,.fl-jc_c{-webkit-box-pack:center;-moz-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}
+.justify-content-end,.fl-jc_e{-webkit-box-pack:end;-moz-box-pack:end;-webkit-justify-content:flex-end;-ms-flex-pack:end;justify-content:flex-end}
+.justify-content-space-around,.fl-jc_sa{-ms-flex-pack:distribute;justify-content:space-around}
+.justify-content-space-between,.fl-jc_sb{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}
+.align-self-center,.fl-as_c{-ms-flex-item-align:center;-moz-align-self:center;-webkit-align-self:center;align-self:center}
+.align-items-center,.fl-ai_c{-webkit-box-align:center;-moz-box-align:center;-ms-flex-align:center;-webkit-align-items:center;align-items:center}
+.align-items-end,.fl-ai_e{-webkit-box-align:end;-moz-box-align:end;-ms-flex-align:end;-webkit-align-items:flex-end;align-items:flex-end}
+.margin-b_30{margin-bottom:30px}
+.margin-b_50{margin-bottom:50px}
+.margin_0{margin:0}
+.margin-b_0{margin-bottom:0}
+.padding-0{padding:0}
+.padding-l-0{padding-left:0}
+.block{display:block}
+.inline-block{display:inline-block}
+.text-left{text-align:left}
+.text-center{text-align:center}
+.text-right{text-align:right}

@@ -1,0 +1,93 @@
+.search-page * {box-sizing: border-box;}
+div.search-page-params {margin-top: 6px;}
+.bx-ag-search-page.search-page{padding-bottom: 20px;}
+.search-item-rate {font-size: 11px;}
+.brands-title {margin-bottom: 10px;}
+
+.search-page .search-page-form {margin-bottom: 0;}
+.search-page .search-preview + .search-description {margin-left: 135px;}
+.search-page .search-title {margin-bottom: 5px;	}
+.search-page .search-title a {font-weight: bold;color: #000;}
+.search-page .search-previewtext {font-size: 13px;margin-bottom: 5px;}
+.search-page .search-propslist {font-size: 13px;margin-bottom: 5px;}
+.search-page .search-preview {text-align: center;}
+.search-page .search-preview img {display: inline-block;}
+.search-page input[type=text] {	outline: none;}
+.ag-spage-history {
+	display: block;
+	margin-bottom: 15px;
+}
+	.ag-spage-history a {
+		color: #222;
+		text-decoration: underline;
+	}
+	.ag-spage-history a:hover {
+		text-decoration: none;
+	}
+
+.search-page .search-change-how {
+	margin-top: 15px;
+}
+
+.ag-spage-clarify-list {
+	display: block;
+}
+.ag-spage-clarify-title {
+		font-size: 15px;
+		font-weight: bold;
+		margin-bottom: 8px;
+	}
+.ag-spage-clarify-item {
+		display: inline-block;
+		color: #111;
+		text-decoration: none;
+		border: 1px solid #111;
+		padding: 4px 10px;
+		border-radius: 2px;
+	}
+.ag-spage-clarify-item:hover {
+		text-decoration: none;
+		border: 1px solid #000;
+	}
+.theme-brands {
+    border: 1px solid #F0F0F0;
+    border-radius: 10px;
+margin-bottom:28px;
+}
+.theme-brands form {
+    display: flex;
+    align-items: center;
+}
+.search-page  .theme-brands input[type=text], .theme-brands button {
+    border: none;
+    background: none;
+}
+.search-page  .theme-brands input[type=text] {
+    color: #000;
+    font-size: 18px;
+    line-height: 19px;
+    padding: 18px 0 18px 21px;
+    width: calc(100% - 40px);
+}
+@media (max-width: 1024px) {
+.search-page  .theme-brands input[type=text] {padding: 12px 0 12px 21px;}
+.search-page button svg{width: 14px; height: 14px;}
+}
+@media (max-width:767px){
+	.search-page form {
+		display: block;
+		position: relative;
+	}
+	.search-page input[type="text"] {
+		width: 100%;
+	}
+	.search-page input[type="submit"] {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+}
+
+
+
+

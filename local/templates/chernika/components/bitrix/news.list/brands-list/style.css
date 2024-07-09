@@ -1,0 +1,10 @@
+.brands-list-title {text-transform: uppercase;font-weight: 600;font-size: 22px;line-height: 29px;}
+.brands-list-list {margin-top:4px; margin-bottom:24px;}
+.brands-list-item {text-transform: uppercase;font-size: 18px;line-height: 29px;}
+.brands-list-item a{color: #000000;}
+.brands-list-item a:hover {color:#FF9E4A}
+.brands-list .brands-top-title {margin-bottom: 28px;}
+@media (max-width: 1024px) {
+.brands-list .brands-top-title { margin-bottom: 20px;font-size: 18px; margin-top:40px; color:#000;}
+
+}
