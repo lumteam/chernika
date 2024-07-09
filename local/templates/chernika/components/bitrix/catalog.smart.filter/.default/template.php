@@ -499,6 +499,7 @@ unset($arr);
                     </div>
 
                     <?
+                    //кнопки "показать все" и "свернуть".
                     if(145 === $key) { ?>
                         <div id="expandButton" class="toggle-button more-link">
                             Все

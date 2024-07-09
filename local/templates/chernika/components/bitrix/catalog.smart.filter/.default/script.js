@@ -854,7 +854,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
+//нопки "показать все" и "свернуть".
 $(document).ready(function() {
 
 	document.getElementById('expandButton').addEventListener('click', function() {

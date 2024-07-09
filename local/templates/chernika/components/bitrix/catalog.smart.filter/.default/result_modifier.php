@@ -65,7 +65,7 @@ if ($arParams["SMART_FILTER_PATH"] && count(explode('/', $arParams["SMART_FILTER
 	}
 }
 
-//сортировка значений в фильтре
+//сортировка значений - вместо js
 foreach ($arResult["ITEMS"] as &$arItem) {
 
     if ($arItem["CODE"] === "BRAND") {//бренды по Сортировка

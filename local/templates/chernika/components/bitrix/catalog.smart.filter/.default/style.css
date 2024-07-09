@@ -1,17 +1,19 @@
 .bx_filter_param_label.disabled{
     opacity:.2;cursor:default; display: none;
 }
-
+/* для кнопок "показать все" и "свернуть".*/
 .toggle-button{
     margin: 10px 0 0;
     text-align: right;
     cursor: pointer;
 }
 
+/*скрыть скролл для блока с брендами.*/
 .aside-filter-item.key-145 ul.long{
     overflow-y: hidden;
 }
 
+/*выставить всю высоту (распахнуть).*/
 .aside-filter-item.key-145 ul.long.expand
 {
     height: auto;
