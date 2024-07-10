@@ -504,7 +504,7 @@ unset($arr);
                         <div id="expandButton" class="toggle-button more-link">
                             Все
                         </div>
-                        <div id="collapseButton" class="toggle-button" style="display: none;">
+                        <div id="collapseButton" class="toggle-button more-link more-link-seo open" style="display: none;">
                             Свернуть
                         </div>
                         <?
