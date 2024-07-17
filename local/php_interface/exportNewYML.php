@@ -14,7 +14,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 
 echo \PDV\YML::exportYmlNew(
     $_SERVER["DOCUMENT_ROOT"].'/bitrix/catalog_export/export_NEW.xml',
-    'chernika-optika.ru',
+    'dev.chernika-optika.ru',
     'market',
     false,
     's1',

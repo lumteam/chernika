@@ -383,8 +383,22 @@ unset($arr);
             <div class="aside-filter-item bx_filter_parameters_box js-prop_wrap key-<?=$key?> "<?=$st?>>
                 <span class="bx_filter_container_modef"></span>
                 <div class="aside-filter-item-title"><?=$arItem["NAME"]?></div>
+
+
+
                 <div class="bx_filter_block">
                     <div class="bx_filter_parameters_box_container">
+
+                    <?
+                    //поле для фильтрации брендов по названию
+                    if(145 === $key) { ?>
+                        <div>
+                            <input type="text" class="" id="brandFilter" placeholder="Введите название бренда" />
+                        </div>
+                        <?
+                    }
+                    ?>
+
                     <?
                     $arCur = current($arItem["VALUES"]);
                     switch ($arItem["DISPLAY_TYPE"])

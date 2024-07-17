@@ -875,4 +875,18 @@ $(document).ready(function() {
 		$("#expandButton").show();
 	});
 
+	$('#brandFilter').on('input', function() {
+		var filterValue = $(this).val().toLowerCase();
+
+		$('ul li').each(function() {
+			let label = $(this).find('label')
+			var labelText = label.text().toLowerCase();
+			if (labelText.indexOf(filterValue) !== -1) {
+				label.removeClass('hidden');
+			} else {
+				label.addClass('hidden');
+			}
+		});
+	});
+
 });
