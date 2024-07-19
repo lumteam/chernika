@@ -154,6 +154,8 @@ class Iblock {
             Loader::includeModule('iblock');
             Loader::includeModule('catalog');
             $iblockId = \CIBlockElement::GetIBlockByID($ID);
+            global $USER;
+            $userID = $USER->GetID();
 
             if ( in_array($iblockId, array(IBLOCK_ID__CATALOG, IBLOCK_ID__CATALOG_2)) ) {
                 $rsElem = \CIBlockElement::GetList(
@@ -258,6 +260,28 @@ class Iblock {
 
                         self::enableHandler();
                     }
+
+                    if($userID == 21 && !empty($arElem['PROPERTIES']['NAME_TMP']['VALUE'])) {
+                        if ( !self::isEnabledHandler() )
+                            return;
+
+                        self::disableHandler();
+
+                        $el = new \CIBlockElement;
+                        $el->Update(
+                            $arElem['ID'],
+                            [
+                                'NAME' => $arElem['PROPERTIES']['NAME_TMP']['VALUE']
+                            ]
+                        );
+
+                        self::enableHandler();
+
+                    }
+                    else{
+                        \CIBlockElement::SetPropertyValues($arElem['ID'], $iblockId, $arElem['NAME'], 'NAME_TMP');
+                    }
+
                 }
             }
             elseif ( in_array($iblockId, array(IBLOCK_ID__CATALOG_TP, IBLOCK_ID__CATALOG_TP_2)) ) {
@@ -284,7 +308,7 @@ class Iblock {
                         array('IBLOCK_ID' => $iblockId, 'PROPERTY_CML2_LINK' => $arElem['ID']),
                         false,
                         false,
-                        array('ID', 'ACTIVE')
+                        array('ID', 'ACTIVE', 'PROPERTY_NAME_TMP')
                     );
                     while ( $arElement = $rsElement->GetNext() ) {
                         if ( $arElement['ACTIVE'] == 'Y' ) {
@@ -302,6 +326,31 @@ class Iblock {
 
                             $priceMskArr = \PDV\Tools::getMskSpbPrice($arElement['ID']);
                             $priceMskSpb += $priceMskArr['PRICE'];
+
+
+                            if($userID == 21 && !empty($arElement['PROPERTIES']['NAME_TMP']['VALUE'])) {
+                                if ( !self::isEnabledHandler() )
+                                    return;
+
+                                self::disableHandler();
+
+                                $el = new \CIBlockElement;
+                                $el->Update(
+                                    $arElement['ID'],
+                                    [
+                                        'NAME' => $arElement['PROPERTY_NAME_TMP_VALUE']
+                                    ]
+                                );
+
+                                self::enableHandler();
+
+                            }
+                            else
+                            {
+                                \CIBlockElement::SetPropertyValues($arElement['ID'], $iblockId, $arElement['NAME'], 'NAME_TMP');
+                            }
+
+
                         }
                     }
 
@@ -314,6 +363,10 @@ class Iblock {
 
                     \CIBlockElement::SetPropertyValues($arElem['ID'], $iblockId, $sortMskSpb, 'SORT');
                     \CIBlockElement::SetPropertyValues($arElem['ID'], $iblockId, $sort, 'SORT_ALL');
+
+
+                    \CIBlockElement::SetPropertyValues($arElem['ID'], $iblockId, $arElem['NAME'], 'NAME_TMP');
+
                 }
             }
         }

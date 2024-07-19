@@ -99,9 +99,6 @@ class YML {
 
             $arFilter = ['IBLOCK_ID' => IBLOCK_ID__CATALOG, 'ACTIVE' => 'Y', 'ACTIVE_DATE' => 'Y', 'SECTION_ID' => SECTION_ID__CATALOG, 'INCLUDE_SUBSECTIONS' => 'Y'];
 
-            if($onlyChecked)
-                $arFilter['PROPERTY_ADD_YML_VALUE'] = 'Y';
-
             $rsElem = \CIBlockElement::GetList(
                 ['id' => 'asc'],
                 $arFilter,
@@ -163,7 +160,8 @@ class YML {
                         }
                         else {
                             $arCatalog = \CCatalogProduct::GetByID($arElem['ID']);
-                            if ( $arCatalog['QUANTITY'] > 0 ) {
+                            $bInStock = $arCatalog['QUANTITY'] > 0;
+                            if ( $bInStock ) {
                                 $arPrice = \PDV\Tools::getMskSpbPrice($arElem['ID']);
                                 $price1 = \PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
                                 if ($price1 >= $minPrice) {
@@ -208,9 +206,6 @@ class YML {
             //Солнцезащитные очки
 
             $arFilter = ['IBLOCK_ID' => IBLOCK_ID__CATALOG_2, 'ACTIVE' => 'Y', 'ACTIVE_DATE' => 'Y', 'SECTION_ID' => SECTION_ID__CATALOG_2, 'INCLUDE_SUBSECTIONS' => 'Y'];
-
-            if($onlyChecked)
-                $arFilter['PROPERTY_ADD_YML_VALUE'] = 'Y';
 
             $brands = [];
             $rsElem = \CIBlockElement::GetList(
@@ -834,6 +829,7 @@ class YML {
                             $description .= '</ul>]]>';
                         }
                         unset($params);
+
                         $strTmpOff .= '<description>'.$description.'</description>'."\n";
 
                         if ( $arElem['PRICE'] <> $arElem['SALE_PRICE'] ) {
@@ -997,6 +993,7 @@ class YML {
             if($onlyChecked)
                 $arFilter['PROPERTY_ADD_YML_VALUE'] = 'Y';
 
+
             $rsElem = \CIBlockElement::GetList(
                 ['id' => 'asc'],
                 $arFilter,
@@ -1031,19 +1028,20 @@ class YML {
                         );
                         if ( $rsElemTP->SelectedRowsCount() > 0 ) {
                             while ( $arElemTP = $rsElemTP->GetNext() ) {
-                                $arPrice = \PDV\Tools::getMskSpbPrice($arElemTP['ID']);
-
-                                $price1 = \PDV\Tools::getSalePrice($arElemTP['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
+                                //$arPrice = \PDV\Tools::getMskSpbPrice($arElemTP['ID']);
+                                //$price1 = \PDV\Tools::getSalePrice($arElemTP['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
+                                $price1 = $arElem['PROPERTIES']['PRISE']['VALUE'];
                                 if ($price1 >= $minPrice) {
-                                    if ( $arPrice['PRICE'] > 0 ) {
+                                    if ( $price1 > 0 ) {
                                         $brands[] = $arElem['PROPERTIES']['BRAND']['VALUE'];
                                         $arItems[SECTION_ID__CATALOG][ $arElemTP['ID'] ] = [
                                             'ID' => $arElemTP['ID'],
                                             'NAME' => $arElem['NAME'],
                                             'PRODUCT_URL' => $arElem['PRODUCT_URL'],
                                             'IMAGE' => $arElem['IMAGE'],
-                                            'PRICE' => \PDV\Tools::ceilCoefficient($arPrice['PRICE']),
-                                            'SALE_PRICE' => \PDV\Tools::ceilCoefficient(\PDV\Tools::getSalePrice($arElemTP['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId)),
+                                            'PRICE' => \PDV\Tools::ceilCoefficient($price1),
+                                            //'SALE_PRICE' => \PDV\Tools::ceilCoefficient(\PDV\Tools::getSalePrice($arElemTP['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId)),
+                                            'SALE_PRICE' => \PDV\Tools::ceilCoefficient($price1),
                                             'CML2_ARTICLE' => $arElem['PROPERTIES']['CML2_ARTICLE']['VALUE'],
                                             'BRAND' => $arElem['PROPERTIES']['BRAND']['VALUE'],
                                             'POL' => $arElem['PROPERTIES']['POL']['VALUE'],
@@ -1059,11 +1057,13 @@ class YML {
                         }
                         else {
                             $arCatalog = \CCatalogProduct::GetByID($arElem['ID']);
-                            if ( $arCatalog['QUANTITY'] > 0 ) {
-                                $arPrice = \PDV\Tools::getMskSpbPrice($arElem['ID']);
-                                $price1 = \PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
+                            $bInStock = $arCatalog['QUANTITY'] > 0 || $arElem['PROPERTIES']['DOSTUPNOST_TOVARA']['VALUE_XML_ID'] === "DELAY";
+                            if ( $bInStock ) {
+                                //$arPrice = \PDV\Tools::getMskSpbPrice($arElem['ID']);
+                                //$price1 = \PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
+                                $price1 = $arElem['PROPERTIES']['PRISE']['VALUE'];
                                 if ($price1 >= $minPrice) {
-                                    if ( $arPrice['PRICE'] > 0 ) {
+                                    if ( $price1 > 0 ) {
                                         $brands[] = $arElem['PROPERTIES']['BRAND']['VALUE'];
 
                                         $arItems[SECTION_ID__CATALOG][ $arElem['ID'] ] = [
@@ -1071,8 +1071,9 @@ class YML {
                                             'NAME' => $arElem['NAME'],
                                             'PRODUCT_URL' => $arElem['PRODUCT_URL'],
                                             'IMAGE' => $arElem['IMAGE'],
-                                            'PRICE' => \PDV\Tools::ceilCoefficient($arPrice['PRICE']),
-                                            'SALE_PRICE' => \PDV\Tools::ceilCoefficient(\PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId)),
+                                            'PRICE' => \PDV\Tools::ceilCoefficient($price1),
+                                            //'SALE_PRICE' => \PDV\Tools::ceilCoefficient(\PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId)),
+                                            'SALE_PRICE' => \PDV\Tools::ceilCoefficient($price1),
                                             'CML2_ARTICLE' => $arElem['PROPERTIES']['CML2_ARTICLE']['VALUE'],
                                             'BRAND' => $arElem['PROPERTIES']['BRAND']['VALUE'],
                                             'POL' => $arElem['PROPERTIES']['POL']['VALUE'],
@@ -1144,11 +1145,12 @@ class YML {
                         );
                         if ( $rsElemTP->SelectedRowsCount() > 0 ) {
                             while ( $arElemTP = $rsElemTP->GetNext() ) {
-                                $arPrice = \PDV\Tools::getMskSpbPrice($arElemTP['ID']);
-                                $price2 = \PDV\Tools::getSalePrice($arElemTP['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
-                                if ($price2 >= $minPrice){
+                                //$arPrice = \PDV\Tools::getMskSpbPrice($arElemTP['ID']);
+                                //$price2 = \PDV\Tools::getSalePrice($arElemTP['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
+                                $price1 = $arElem['PROPERTIES']['PRISE']['VALUE'];
+                                if ($price1 >= $minPrice){
 
-                                    if ( $arPrice['PRICE'] > 0 ) {
+                                    if ( $price1 > 0 ) {
                                         $idsSolnce[] = $arElemTP['ID'];
                                         $brands[] = $arElem['PROPERTIES']['BRAND']['VALUE'];
 
@@ -1157,8 +1159,9 @@ class YML {
                                             'NAME' => $arElem['NAME'],
                                             'PRODUCT_URL' => $arElem['PRODUCT_URL'],
                                             'IMAGE' => $arElem['IMAGE'],
-                                            'PRICE' => \PDV\Tools::ceilCoefficient($arPrice['PRICE']),
-                                            'SALE_PRICE' => \PDV\Tools::ceilCoefficient(\PDV\Tools::getSalePrice($arElemTP['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId)),
+                                            'PRICE' => \PDV\Tools::ceilCoefficient($price1),
+                                            //'SALE_PRICE' => \PDV\Tools::ceilCoefficient(\PDV\Tools::getSalePrice($arElemTP['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId)),
+                                            'SALE_PRICE' => \PDV\Tools::ceilCoefficient($price1),
                                             'CML2_ARTICLE' => $arElem['PROPERTIES']['CML2_ARTICLE']['VALUE'],
                                             'BRAND' => $arElem['PROPERTIES']['BRAND']['VALUE'],
                                             'POL' => $arElem['PROPERTIES']['POL']['VALUE'],
@@ -1173,11 +1176,13 @@ class YML {
                         }
                         else {
                             $arCatalog = \CCatalogProduct::GetByID($arElem['ID']);
-                            if ( $arCatalog['QUANTITY'] > 0 ) {
-                                $arPrice = \PDV\Tools::getMskSpbPrice($arElem['ID']);
-                                $price2 = \PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
-                                if ($price2 >= $minPrice) {
-                                    if ( $arPrice['PRICE'] > 0 ) {
+                            $bInStock = $arCatalog['QUANTITY'] > 0 || $arElem['PROPERTIES']['DOSTUPNOST_TOVARA']['VALUE_XML_ID'] === "DELAY";
+                            if ( $bInStock ) {
+                                //$arPrice = \PDV\Tools::getMskSpbPrice($arElem['ID']);
+                                //$price2 = \PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
+                                $price1 = $arElem['PROPERTIES']['PRISE']['VALUE'];
+                                if ( $price1 >= $minPrice) {
+                                    if ( $price1 > 0 ) {
                                         $idsSolnce[] = $arElem['ID'];
                                         $brands[] = $arElem['PROPERTIES']['BRAND']['VALUE'];
                                         $arItems[SECTION_ID__CATALOG_2][ $arElem['ID'] ] = [
@@ -1185,8 +1190,9 @@ class YML {
                                             'NAME' => $arElem['NAME'],
                                             'PRODUCT_URL' => $arElem['PRODUCT_URL'],
                                             'IMAGE' => $arElem['IMAGE'],
-                                            'PRICE' => \PDV\Tools::ceilCoefficient($arPrice['PRICE']),
-                                            'SALE_PRICE' => \PDV\Tools::ceilCoefficient(\PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId)),
+                                            'PRICE' => \PDV\Tools::ceilCoefficient($price1),
+                                            //'SALE_PRICE' => \PDV\Tools::ceilCoefficient(\PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId)),
+                                            'SALE_PRICE' => \PDV\Tools::ceilCoefficient($price1),
                                             'CML2_ARTICLE' => $arElem['PROPERTIES']['CML2_ARTICLE']['VALUE'],
                                             'BRAND' => $arElem['PROPERTIES']['BRAND']['VALUE'],
                                             'POL' => $arElem['PROPERTIES']['POL']['VALUE'],
@@ -1231,7 +1237,6 @@ class YML {
 
 
                     if ( !in_array($allBrands[$arElem['BRAND']],$disabledBrands) ) {
-                        echo "1111".PHP_EOL;
 
                         if ( $arElem['IMAGE'] > 0 ) {
 
@@ -1262,6 +1267,7 @@ class YML {
                             //$strTmpOff .= '<weight>0.3</weight>';
                             //$strTmpOff .= '<dimensions>20/9/5</dimensions>';
 
+
                             $params = [];
                             $params['Производитель'][] = self::yandex_text2xml($allBrands[ $arElem['BRAND'] ]);
 
@@ -1288,6 +1294,7 @@ class YML {
                                     $params['Цвет'][] = self::yandex_text2xml($arrColors[$color]['UF_NAME']);
                             }
 
+                            /*
                             $description = '';
                             if ( !emptY($params) ) {
                                 $description = '<![CDATA[<ul>';
@@ -1299,7 +1306,13 @@ class YML {
                                 }
                                 $description .= '</ul>]]>';
                             }
+                            */
+
+                            $description = self::yandex_text2xml('Гарантия лучшей цены на '.$allBrands[ $arElem['BRAND'] ].' '.$arElem['CML2_ARTICLE'].'. Нашли дешевле? Сделаем дополнительную скидку!');
+
+
                             unset($params);
+
                             $strTmpOff .= '<description>'.$description.'</description>'."\n";
 
                             if ( $arElem['PRICE'] <> $arElem['SALE_PRICE'] ) {

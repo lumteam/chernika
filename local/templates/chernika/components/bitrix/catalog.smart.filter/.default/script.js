@@ -121,15 +121,17 @@ JCSmartFilter.prototype.updateItem = function (PID, arItem)
 					var label = document.querySelector('[data-role="label_'+value.CONTROL_ID+'"]');
 					if (value.DISABLED)
 					{
-						if (label)
+						if (label) {
 							BX.addClass(label, 'disabled');
+						}
 						else
 							BX.addClass(control.parentNode, 'disabled');
 					}
 					else
 					{
-						if (label)
+						if (label) {
 							BX.removeClass(label, 'disabled');
+						}
 						else
 							BX.removeClass(control.parentNode, 'disabled');
 					}
@@ -889,4 +891,14 @@ $(document).ready(function() {
 		});
 	});
 
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('click', function(event) {
+		var target = event.target.closest('label');
+		if (target && target.classList.contains('disabled')) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	});
 });

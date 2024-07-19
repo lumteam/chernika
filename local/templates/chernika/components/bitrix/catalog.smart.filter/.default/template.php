@@ -468,12 +468,18 @@ unset($arr);
                                         $classSpan = ' class="white"';
 
                                     $class = "";
+                                    $toggleClass = "active";
                                     if ($ar["CHECKED"])
                                         $class .= " active";
-                                    if ($ar["DISABLED"])
+                                    if ($ar["DISABLED"]) {
                                         $class .= " disabled";
+                                        $toggleClass = "disabled";
+                                    }
                                     ?>
-                                    <label for="<?=$ar["CONTROL_ID"]?>" data-role="label_<?=$ar["CONTROL_ID"]?>" class="colors-item<?if($i==0)echo' first';?> bx_filter_param_label dib<?=$class?>" onclick="smartFilter.keyup(BX('<?=CUtil::JSEscape($ar["CONTROL_ID"])?>')); BX.toggleClass(this, 'active');" title="<?=$ar['VALUE']?>">
+                                    <label for="<?=$ar["CONTROL_ID"]?>" data-role="label_<?=$ar["CONTROL_ID"]?>"
+                                           class="1 colors-item<?if($i==0)echo' first';?> bx_filter_param_label dib<?=$class?>"
+                                           onclick="smartFilter.keyup(BX('<?=CUtil::JSEscape($ar["CONTROL_ID"])?>')); BX.toggleClass(this, '<?=$toggleClass?>');"
+                                           title="<?=$ar['VALUE']?>">
                                         <?if ( !empty($ar['FILE']['SRC']) ){?>
                                             <span<?=$classSpan?> style="background: url('<?=$ar['FILE']['SRC']?>') no-repeat center center;"></span>
                                         <?}else{?>

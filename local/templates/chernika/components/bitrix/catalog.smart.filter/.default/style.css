@@ -28,3 +28,7 @@
     width: 100%;
     padding: 5px;
 }
+
+.aside-filter-item ul.colors .colors-item.bx_filter_param_label.disabled{
+    display:none;
+}
