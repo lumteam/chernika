@@ -880,7 +880,7 @@ $(document).ready(function() {
 	$('#brandFilter').on('input', function() {
 		var filterValue = $(this).val().toLowerCase();
 
-		$('ul li').each(function() {
+		$('.key-145 ul li').each(function() {
 			let label = $(this).find('label')
 			var labelText = label.text().toLowerCase();
 			if (labelText.indexOf(filterValue) !== -1) {
