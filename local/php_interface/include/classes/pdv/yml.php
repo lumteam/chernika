@@ -948,7 +948,7 @@ class YML {
 
         $url = 'https://'.$domen;
 
-        echo $SETUP_FILE_NAME;
+        //echo $SETUP_FILE_NAME;
 
         if ( $fp = @fopen($SETUP_FILE_NAME, "wb") )
         {
@@ -1005,8 +1005,11 @@ class YML {
                 $arElem = $arElemObj->GetFields();
                 $arElem['PROPERTIES'] = $arElemObj->GetProperties();
 
+                /*
                 echo $arElem['NAME'].PHP_EOL;
                 echo "brend: ".$allBrands[ $arElem['PROPERTIES']['BRAND']['VALUE'] ].PHP_EOL;
+                echo "1-4 дня: ".$arElem['PROPERTIES']['DELIVERY_DELAY']['VALUE'].PHP_EOL;
+                */
 
                 if ( !empty($allBrands[ $arElem['PROPERTIES']['BRAND']['VALUE'] ]) ) {
                     if ( \PDV\Tools::showPrice($arElem) ) {
@@ -1049,7 +1052,7 @@ class YML {
                                             'STYLE' => $arElem['PROPERTIES']['STYLE']['VALUE'],
                                             'MATERIAL' => $arElem['PROPERTIES']['MATERIAL']['VALUE'],
                                             'COLOR' => $arElem['PROPERTIES']['COLOR']['VALUE'],
-                                            'IS_SPEC_PRICE' => $arPrice['IS_SPEC'],
+                                            //'IS_SPEC_PRICE' => $arPrice['IS_SPEC'],
                                         ];
                                     }
                                 }//if price >= $minPrice
@@ -1057,7 +1060,7 @@ class YML {
                         }
                         else {
                             $arCatalog = \CCatalogProduct::GetByID($arElem['ID']);
-                            $bInStock = $arCatalog['QUANTITY'] > 0 || $arElem['PROPERTIES']['DOSTUPNOST_TOVARA']['VALUE_XML_ID'] === "DELAY";
+                            $bInStock = $arCatalog['QUANTITY'] > 0 || $arElem['PROPERTIES']['DELIVERY_DELAY']['VALUE'] === "Y";
                             if ( $bInStock ) {
                                 //$arPrice = \PDV\Tools::getMskSpbPrice($arElem['ID']);
                                 //$price1 = \PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
@@ -1081,7 +1084,7 @@ class YML {
                                             'STYLE' => $arElem['PROPERTIES']['STYLE']['VALUE'],
                                             'MATERIAL' => $arElem['PROPERTIES']['MATERIAL']['VALUE'],
                                             'COLOR' => $arElem['PROPERTIES']['COLOR']['VALUE'],
-                                            'IS_SPEC_PRICE' => $arPrice['IS_SPEC'],
+                                            //'IS_SPEC_PRICE' => $arPrice['IS_SPEC'],
                                         ];
                                     }
                                 } // if price >= $minPrice
@@ -1120,15 +1123,17 @@ class YML {
                 $arElem = $arElemObj->GetFields();
                 $arElem['PROPERTIES'] = $arElemObj->GetProperties();
 
+                /*
                 echo $arElem['NAME'].PHP_EOL;
                 echo "brend: ".$allBrands[ $arElem['PROPERTIES']['BRAND']['VALUE'] ].PHP_EOL;
+                echo "1-4 дня: ".$arElem['PROPERTIES']['DELIVERY_DELAY']['VALUE'].PHP_EOL;
+                */
 
                 if ( !empty($allBrands[ $arElem['PROPERTIES']['BRAND']['VALUE'] ]) ) {
                     if ( \PDV\Tools::showPrice($arElem) ) {
                         $arElem['PRODUCT_URL'] = self::getDetailPageUrl($arElem, IBLOCK_ID__CATALOG_2);
 
-                        echo $arElem['PRODUCT_URL'].PHP_EOL;
-
+                        //echo $arElem['PRODUCT_URL'].PHP_EOL;
                         if ( !empty($arElem['DETAIL_PICTURE']) )
                             $arElem['IMAGE'] = $arElem['DETAIL_PICTURE'];
                         elseif ( !empty($arElem['PREVIEW_PICTURE']) )
@@ -1176,7 +1181,7 @@ class YML {
                         }
                         else {
                             $arCatalog = \CCatalogProduct::GetByID($arElem['ID']);
-                            $bInStock = $arCatalog['QUANTITY'] > 0 || $arElem['PROPERTIES']['DOSTUPNOST_TOVARA']['VALUE_XML_ID'] === "DELAY";
+                            $bInStock = $arCatalog['QUANTITY'] > 0 || $arElem['PROPERTIES']['DELIVERY_DELAY']['VALUE'] === "Y";
                             if ( $bInStock ) {
                                 //$arPrice = \PDV\Tools::getMskSpbPrice($arElem['ID']);
                                 //$price2 = \PDV\Tools::getSalePrice($arElem['ID'], $arPrice['ID'], $arPrice['PRICE'], 1, $siteId);
@@ -1230,18 +1235,19 @@ class YML {
 
             $strTmpOff = '';
             $strPromoOffers = '';
+
+            echo "Товары в фиде: ".PHP_EOL;
+
             foreach ( $arItems as $sectId => $arElems) {
                 foreach ( $arElems as $arElem ) {
 
-                    echo $arElem['NAME'].PHP_EOL;
-
-
+                    echo "Кандидат в фид: ".$arElem['NAME'].PHP_EOL;
                     if ( !in_array($allBrands[$arElem['BRAND']],$disabledBrands) ) {
 
+                        echo 'image: '.$arElem['IMAGE'].PHP_EOL;
                         if ( $arElem['IMAGE'] > 0 ) {
 
-                            echo $arElem['IMAGE'].PHP_EOL;
-
+                            echo "Добавлен в фид.".PHP_EOL.PHP_EOL;
                             $strTmpOff .= '<offer id="'.$arElem['ID'].'" type="vendor.model" available="true">'."\n";
 
                             $type = 'Оправа';
@@ -1379,6 +1385,9 @@ class YML {
                             $strTmpOff .= '</offer>'."\n";
                         }
                     }
+                    else{
+                        echo " - не прошел по бренду";
+                    }
                 }
             }
 
@@ -1420,10 +1429,12 @@ class YML {
             fwrite($fp, "</offers>\n");
             unset($strTmpOff);
 
+            /*
             fwrite($fp, "<promos>\n");
             fwrite($fp, $strTmpPromos);
             fwrite($fp, "</promos>\n");
             unset($strTmpPromos);
+            */
 
             fwrite($fp, "</shop>\n");
             fwrite($fp, "</yml_catalog>\n");
